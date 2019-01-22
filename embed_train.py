@@ -29,12 +29,11 @@ for cat_col in categorical_features:
         continue
     train_data[cat_col] = cat_lookup(train_data[cat_col], cat_col)
     val_data[cat_col] = cat_lookup(val_data[cat_col], cat_col)
-train_dataset = TabularDataset(data=train_data, cat_cols=categorical_features,
-                               output_col=output_feature)
-val_dataset = TabularDataset(data=train_data, cat_cols=categorical_features)
+train_dataset = TabularDataset(data=train_data, cat_cols=categorical_features, output_col=output_feature)
+val_dataset = TabularDataset(data=train_data, cat_cols=categorical_features, output_col=output_feature)
 batchsize = 64
 train_dataloader = DataLoader(train_dataset, batchsize, shuffle=True, num_workers=8)
-val_dataloader = DataLoader(val_dataset, 1, shuffle=False, num_workers=8)
+val_dataloader = DataLoader(val_dataset, batchsize, shuffle=False, num_workers=8)
 
 cat_dims = [308, 308, 3, 8, 8, 8, 5, 4, 3, 3, 3, 4, 15]
 emb_dims = [(x, min(50, (x + 1) // 2)) for x in cat_dims]
